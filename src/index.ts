@@ -6,6 +6,7 @@ import {NextFunction, Request, Response} from "express/ts4.0";
 import cors from 'cors';
 import * as swaggerDocument from './swagger.json';
 import swaggerUi from "swagger-ui-express";
+import {createCountFile} from "./createCountFile";
 
 const app = express();
 const port = 3000;
@@ -28,25 +29,13 @@ app.get("/double/:number", (req:Request,res:Response, next:NextFunction)=> {
 });
 
 app.get('/count', async (req:Request,res:Response, next:NextFunction)=> {
-  const baseDir = path.join(process.cwd());
-  const filePath = `${baseDir}/.count.txt`;
+  const filePath = path.join(process.cwd(), 'db', '.count.txt');
   try {
-    const data = await fs.readFile(filePath, "utf8").catch(err => {
-      if (err.code === 'ENOENT') {
-        fs.writeFile(filePath, '1', 'utf-8');
-
-        res.json({count: 1});
-      } else {
-        next(err);
-      }
-    });
-    if(data) {
+    const data = await fs.readFile(filePath, "utf8");
       const parseData = Number(data);
       const newCount = parseData + 1;
-      await fs.writeFile(filePath, '' + newCount);
-
+      await fs.writeFile(filePath, '' + newCount,"utf8");
       res.json({ count: newCount });
-    }
 
   } catch (err) {
     next(err);
@@ -74,7 +63,6 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 };
 app.use(errorHandler);
 
-
-
+createCountFile();
 
 app.listen(port, () => console.log(`Running on port ${port}`));

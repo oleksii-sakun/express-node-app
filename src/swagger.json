@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000"
+      "url": "http://localhost:3000"
     }
   ],
   "tags": [
@@ -52,7 +52,7 @@
     },
     "/count": {
       "get": {
-        "summary": "Responds with `{ \"count\": 1 }` on the first visit, `{ \"count\": 2 }` on the second visit, and so on.\nEach visit should increase `count` by `1`",
+        "summary": "Returns `{ \"count\": 1 }` on the first visit, `{ \"count\": 2 }` on the second visit, and so on.\nEach visit should increase `count` by `1`",
         "tags": [
           "API"
         ],
