@@ -1,0 +1,98 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "test API",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "API",
+      "description": "API"
+    }
+  ],
+  "paths": {
+    "/double/{number}": {
+      "get": {
+        "summary": "returns the answer multiplied by 2",
+        "tags": [
+          "API"
+        ],
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "description": "simple parameter",
+            "schema": {
+              "type": "number",
+              "example": "2"
+            }
+          }
+        ],
+        "description": "parameter to be multiplied",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "{result: 4 }"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/count": {
+      "get": {
+        "summary": "Responds with `{ \"count\": 1 }` on the first visit, `{ \"count\": 2 }` on the second visit, and so on.\nEach visit should increase `count` by `1`",
+        "tags": [
+          "API"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "{count: 2 }"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/joke": {
+      "get": {
+        "summary": "Returns the \"Joke of the day\" from API https://jokes.one/api/joke/",
+        "tags": [
+          "API"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "{joke:{jokes:[{description:Joke of the day ,language:en,background:,category:jod,date:2021-12-15,joke:{title:Double Parked,lang:en,length:138,clean:1,racial:0,date:2021-12-15,id:cCCFRhMIK_mEXdApViWlgAeF,text:Q: Why did Santa get a parking ticket last Christmas Eve nA: He was making a special delivery and left his sleigh in a snow parking zone.}}],copyright:2019-20 https://jokes.one}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

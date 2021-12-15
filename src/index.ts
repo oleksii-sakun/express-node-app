@@ -3,11 +3,20 @@ import axios from "axios";
 import path from "path";
 import {promises as fs} from "fs";
 import {NextFunction, Request, Response} from "express/ts4.0";
+import cors from 'cors';
+import * as swaggerDocument from './swagger.json';
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 const port = 5000;
 
 app.use(express.json());
+app.use(cors());
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+);
 
 
 app.get("/double/:number", (req:Request,res:Response, next:NextFunction)=> {
@@ -27,6 +36,8 @@ app.get('/count', async (req:Request,res:Response, next:NextFunction)=> {
         fs.writeFile(filePath, '1', 'utf-8');
 
         res.json({count: 1});
+      } else {
+        next(err);
       }
     });
     if(data) {
@@ -62,6 +73,8 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   next(err) ;
 };
 app.use(errorHandler);
+
+
 
 
 app.listen(port, () => console.log(`Running on port ${port}`));
