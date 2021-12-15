@@ -8,7 +8,7 @@ import * as swaggerDocument from './swagger.json';
 import swaggerUi from "swagger-ui-express";
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 app.use(express.json());
 app.use(cors());
